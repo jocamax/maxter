@@ -38,7 +38,7 @@
             <!-- Contact -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <a href="tel:+381666611999" class="text-gray-700 hover:text-gray-900" aria-label="Pozovi Maxter">
-                    telefon
+
                 </a>
             </div>
 
@@ -86,18 +86,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                                           onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+       
             </div>
         </div>
     </div>
