@@ -35,7 +35,7 @@
           'offers' => [
               '@type' => 'Offer',
               'url' => $canonicalUrl,
-              'priceCurrency' => 'RSD',
+              'priceCurrency' => 'EUR',
               'price' => number_format($product->price ?? 0, 2, '.', ''),
               'availability' => ($product->in_stock ?? true) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
               'itemCondition' => 'https://schema.org/NewCondition'
@@ -82,7 +82,7 @@
     <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
 
-            {{-- Breadcrumb (opciono, semantički koristan) --}}
+            {{-- Breadcrumb --}}
             <nav class="mb-4 text-sm text-gray-500" aria-label="Breadcrumb">
                 <ol class="flex items-center gap-2">
                     <li><a href="{{ route('home') }}" class="hover:text-gray-700">Početna</a></li><span aria-hidden="true">/</span>
@@ -97,9 +97,8 @@
             </nav>
 
             <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-                {{-- ========== Image gallery ========== --}}
+                {{-- Galerija --}}
                 <div class="flex flex-col-reverse">
-                    {{-- Thumbs --}}
                     @if($product->images->count())
                         <div class="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
                             <div class="grid grid-cols-4 gap-6" role="list" aria-label="Galerija sličica">
@@ -127,12 +126,11 @@
                         </div>
                     @endif
 
-                    {{-- Main image --}}
                     <div>
                         @php $main = $product->images->first(); @endphp
                         <img
                             id="mainProductImage"
-                            src="{{ $main ? asset('storage/'.$main->path) : 'https://via.placeholder.com/800x800?text=No+Image' }}"
+                            src="{{ $main ? asset('storage/'.$main->path) : '' }}"
                             alt="{{ $product->title }} — glavna fotografija proizvoda"
                             class="aspect-square w-full object-contain sm:rounded-lg"
                             decoding="async" fetchpriority="high"
@@ -160,12 +158,19 @@
                     <div class="mt-3">
                         <h2 class="sr-only">Informacije o proizvodu</h2>
                         <p class="text-3xl tracking-tight text-gray-900" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                            <meta itemprop="priceCurrency" content="RSD" />
-                            <span itemprop="price" content="{{ number_format($product->price ?? 0, 2, '.', '') }}">
-                {{ number_format($product->price) }} RSD
-              </span>
-                            <span class="text-base text-gray-500"> + PDV</span>
-                            <link itemprop="availability" href="{{ ($product->in_stock ?? true) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' }}" />
+                            <meta itemprop="priceCurrency" content="EUR" />
+
+
+                            <span itemprop="price" content="{{ number_format($product->price * 0.8, 2, '.', '') }}"
+                                  class="font-semibold text-red-600">
+                                €{{ number_format($product->price * 0.8, 2) }}
+                            </span>
+
+                            <span class="text-gray-500 line-through text-lg ml-3">
+                                €{{ number_format($product->price, 2) }}
+                            </span>
+
+                            <span class="text-base text-gray-500 ml-2">+ PDV</span>
                         </p>
                     </div>
 
@@ -224,7 +229,14 @@
                                 </div>
                                 <div class="mt-2 flex items-center justify-between">
                                     <h3 class="text-sm text-gray-900">{{ $rel->title }}</h3>
-                                    <p class="text-sm font-medium text-gray-900">{{ number_format($rel->price, 2) }} RSD</p>
+                                    <div class="text-sm text-gray-900">
+                                        <span class="font-semibold text-red-600">
+                                            €{{ number_format($rel->price * 0.8, 2) }}
+                                        </span>
+                                        <span class="text-gray-500 line-through ml-2">
+                                         €{{ number_format($rel->price, 2) }}
+                                        </span>
+                                    </div>
                                 </div>
                             </a>
                         @endforeach

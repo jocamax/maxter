@@ -10,7 +10,7 @@
                             Pištolji za farbanje
                         </h2>
                         <div class="mt-6 text-base">
-                            <a href="#" class="font-semibold text-white">
+                            <a href="{{ route('products.index', ['category' => 'ostalo']) }}" class="font-semibold text-white">
                                 i ostali delovi
                                 <span aria-hidden="true"> &rarr;</span>
                             </a>

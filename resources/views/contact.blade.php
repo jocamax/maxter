@@ -39,7 +39,6 @@
           ],
           'areaServed' => 'RS',
           'openingHours' => ['Mo-Fr 09:00-17:00'],
-          // Ako znaš koordinate, dodaj:
           // 'geo' => ['@type'=>'GeoCoordinates', 'latitude'=>44.870, 'longitude'=>20.479],
           'sameAs' => [
             // društvene mreže ako ima: 'https://www.facebook.com/...'

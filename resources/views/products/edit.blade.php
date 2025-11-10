@@ -46,7 +46,6 @@
                 @error('category') <div class="text-red-600">{{ $message }}</div> @enderror
             </div>
 
-            {{-- Existing images: drag to reorder + remove --}}
             <div class="mb-3">
                 <label class="form-label mb-2">Images (drag to reorder)</label>
 
@@ -109,7 +108,7 @@
                 </div>
             </div>
 
-            {{-- Add more images (optional) --}}
+            {{-- Add more images --}}
             <div class="mb-3">
                 <label class="form-label">Add images (optional)</label>
                 <input type="file" name="images[]" class="form-control" accept="image/*" multiple>

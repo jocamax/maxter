@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="bg-white p-5">
-        <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
+        <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
 
             <div class="flex items-center justify-between flex-wrap gap-3">
                 <h1 class="text-2xl font-bold tracking-tight text-gray-900">Proizvodi</h1>
@@ -52,7 +52,6 @@
 
         </div>
 
-        {{-- LISTA PROIZVODA kao Schema.org ItemList --}}
         <div class="mt-6 grid grid-cols-1 max-w-7xl m-auto gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
              role="list"
              itemscope
@@ -97,15 +96,23 @@
                                 </a>
                             </h2>
 
-                            {{-- (opciono) kratki opis radi semantike; koristi strip_tags/limit na backendu --}}
-                            {{-- <p class="mt-1 text-xs text-gray-500 line-clamp-1" itemprop="description">{{ Str::limit(strip_tags($p->description), 90) }}</p> --}}
                         </div>
 
-                        <p class="text-sm font-medium text-gray-900 px-1" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                            <meta itemprop="priceCurrency" content="RSD" />
-                            <span itemprop="price" content="{{ number_format($p->price, 2, '.', '') }}">
-                {{ number_format($p->price) }} RSD
-              </span>
+                        <p class="text-sm font-medium text-gray-900 px-1"
+                           itemprop="offers"
+                           itemscope
+                           itemtype="https://schema.org/Offer">
+                            <meta itemprop="priceCurrency" content="EUR" />
+
+                            <span itemprop="price" content="{{ number_format($p->price * 0.8, 2, '.', '') }}"
+                                  class="font-semibold text-red-600">
+                                    €{{ number_format($p->price * 0.8, 2) }}
+                            </span>
+
+                            <span class="text-gray-500 text-xs line-through ml-2">
+        €{{ number_format($p->price, 2) }}
+    </span>
+
                             <link itemprop="availability" href="https://schema.org/InStock" />
                         </p>
                     </div>
@@ -114,8 +121,6 @@
                 <p class="text-gray-500">Trenutno nema dostupnih proizvoda.</p>
             @endforelse
         </div>
-
-        {{-- (opciono) paginacija: obavezno dodaj rel="prev"/"next" u head kroz @section('link_rel') ili komponentu --}}
         {{-- {{ $products->links() }} --}}
     </div>
 </x-app-layout>

@@ -13,8 +13,10 @@
 /.zed
 /auth.json
 /node_modules
+/public/storage/
 /public/hot
 /storage/*.key
+/storage/app/public
 /storage/pail
 /vendor
 Homestead.json

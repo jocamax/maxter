@@ -1,8 +1,8 @@
 <x-app-layout>
     <div class="bg-white p-5">
-        <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
-            <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold tracking-tight text-gray-900">Mašine za peskarenje</h1>
+        <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
+            <div class="flex flex-wrap items-center justify-between">
+                <h1 class="text-2xl font-bold tracking-tight mb-2 text-gray-900">Mašine za peskarenje</h1>
                 <form method="GET" class="flex items-center gap-2">
                     <select
                         name="category"
@@ -60,8 +60,6 @@
                                     {{ $p->title }}
                                 </a>
                             </h3>
-                            {{-- Optional short meta under title --}}
-                            {{-- <p class="mt-1 text-sm text-gray-500 line-clamp-1">{{ \Illuminate\Support\Str::limit($p->description, 40) }}</p> --}}
                         </div>
                         <p class="text-sm font-medium text-gray-900">
                             {{ number_format($p->price, 2) }} RSD
