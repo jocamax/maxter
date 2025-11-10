@@ -61,8 +61,19 @@
                                 </a>
                             </h3>
                         </div>
-                        <p class="text-sm font-medium text-gray-900">
-                            {{ number_format($p->price, 2) }} RSD
+                        <p class="text-sm font-medium text-gray-900 px-1">
+                            <meta itemprop="priceCurrency" content="EUR" />
+
+                            <span itemprop="price" content="{{ number_format($p->price * 0.8, 2, '.', '') }}"
+                                  class="font-semibold text-red-600">
+                                    €{{ number_format($p->price * 0.8, 2) }}
+                            </span>
+
+                            <span class="text-gray-500 text-xs line-through ml-2">
+                             €{{ number_format($p->price, 2) }}
+                            </span>
+
+                            <link itemprop="availability" href="https://schema.org/InStock" />
                         </p>
                     </div>
                 </div>

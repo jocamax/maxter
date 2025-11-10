@@ -112,8 +112,6 @@
                             <span class="text-gray-500 text-xs line-through ml-2">
         €{{ number_format($p->price, 2) }}
     </span>
-
-                            <link itemprop="availability" href="https://schema.org/InStock" />
                         </p>
                     </div>
                 </article>
