@@ -50,7 +50,7 @@ class ProductController extends Controller
     {
 
         DB::transaction(function () use ($request) {
-            $product = Product::create($request->only('title','price','description','technical_data', 'category'));
+            $product = Product::create($request->only('title','price', 'discount','description','technical_data', 'category'));
 
             foreach ($request->file('images', []) as $i => $file) {
                 $path = $file->store('products', 'public');
@@ -105,7 +105,7 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, Product $product) {
         DB::transaction(function () use ($request, $product) {
-            $product->update($request->only('title','price','description','technical_data', 'category'));
+            $product->update($request->only('title','price', 'discount','description','technical_data', 'category'));
 
             $currentCount = $product->images()->count();
             $incoming = count($request->file('images', []));
@@ -207,7 +207,7 @@ class ProductController extends Controller
         if ($request->filled('category')) {
             $query->where('category', $request->string('category'));
         } else{
-            $query->where('category','Masine-za-peskarenje');
+            $query->where('category','peskarenje');
         }
 
         $products = $query->paginate(25)->withQueryString();

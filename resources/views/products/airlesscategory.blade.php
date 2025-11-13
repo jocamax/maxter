@@ -35,7 +35,7 @@
         <div class="mt-6 grid grid-cols-1 max-w-7xl m-auto gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             @forelse ($products as $p)
                 <div class="group relative">
-                    <a href="{{ route('products.show', $p->id) }}" class="block">
+                    <a href="{{ route('products.show', $p->slug) }}" class="block">
                         <div class="aspect-square w-full overflow-hidden rounded-md bg-white shadow-md">
                             @php $img = $p->images->first(); @endphp
                             @if($img)
@@ -55,7 +55,7 @@
                     <div class="mt-4 flex justify-between">
                         <div>
                             <h3 class="text-sm text-gray-700">
-                                <a href="{{ route('products.show', $p->id) }}">
+                                <a href="{{ route('products.show', $p->slug) }}">
                                     <span aria-hidden="true" class="absolute inset-0"></span>
                                     {{ $p->title }}
                                 </a>

@@ -19,6 +19,22 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label">Discount (%) — optional</label>
+                <input name="discount"
+                       type="number"
+                       min="0"
+                       max="100"
+                       value="{{ old('discount', $product->discount ?? 0) }}"
+                       class="form-control">
+
+                <div class="form-text">0 = no discount. Example: 20 for 20% off.</div>
+
+                @error('discount')
+                <div class="text-danger small">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label">Description</label>
                 <textarea name="description" rows="5" class="form-control w-96" required>{{ old('description', $product->description) }}</textarea>
                 @error('description') <div class="text-red-600">{{ $message }}</div> @enderror

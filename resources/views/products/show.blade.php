@@ -2,21 +2,21 @@
 @php
     $mainImg = optional($product->images->first())->path ? asset('storage/'.$product->images->first()->path) : asset('images/og-default.jpg');
     $descForMeta = \Illuminate\Support\Str::limit(strip_tags($product->description ?? ''), 155);
-    $canonicalUrl = route('products.show', $product->id);
+    $canonicalUrl = route('products.show', $product->slug);
 @endphp
 
-@section('title', $product->title . ' — Maxter')
+@section('title', $product->title . ' - Maxter')
 @section('meta_description', $descForMeta)
 @section('canonical', $canonicalUrl)
 
 @section('og_type', 'product')
-@section('og_title', $product->title . ' — Maxter')
+@section('og_title', $product->title . ' - Maxter')
 @section('og_description', $descForMeta)
 @section('og_url', $canonicalUrl)
 @section('og_image', $mainImg)
-@section('og_image_alt', $product->title . ' — fotografija proizvoda')
+@section('og_image_alt', $product->title . ' - fotografija proizvoda')
 
-@section('twitter_title', $product->title . ' — Maxter')
+@section('twitter_title', $product->title . ' - Maxter')
 @section('twitter_description', $descForMeta)
 @section('twitter_image', $mainImg)
 
@@ -157,21 +157,45 @@
 
                     <div class="mt-3">
                         <h2 class="sr-only">Informacije o proizvodu</h2>
-                        <p class="text-3xl tracking-tight text-gray-900" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-                            <meta itemprop="priceCurrency" content="EUR" />
+{{--                        <p class="text-3xl tracking-tight text-gray-900" itemprop="offers" itemscope itemtype="https://schema.org/Offer">--}}
+{{--                            <meta itemprop="priceCurrency" content="EUR" />--}}
 
 
-                            <span itemprop="price" content="{{ number_format($product->price * 0.8, 2, '.', '') }}"
+{{--                            <span itemprop="price" content="{{ number_format($product->price * 0.8, 2, '.', '') }}"--}}
+{{--                                  class="font-semibold text-red-600">--}}
+{{--                                €{{ number_format($product->price * 0.8, 2) }}--}}
+{{--                            </span>--}}
+
+{{--                            <span class="text-gray-500 line-through text-lg ml-3">--}}
+{{--                                €{{ number_format($product->price, 2) }}--}}
+{{--                            </span>--}}
+
+{{--                            <span class="text-base text-gray-500 ml-2">+ PDV</span>--}}
+{{--                        </p>--}}
+
+                        @if($product->discount > 0)
+                            @php
+                                $discountedPrice = $product->price * (1 - ($product->discount / 100));
+                            @endphp
+
+                            <span itemprop="price"
+                                  content="{{ number_format($discountedPrice, 2, '.', '') }}"
                                   class="font-semibold text-red-600">
-                                €{{ number_format($product->price * 0.8, 2) }}
-                            </span>
+                                    €{{ number_format($discountedPrice, 2) }}
+                             </span>
 
                             <span class="text-gray-500 line-through text-lg ml-3">
                                 €{{ number_format($product->price, 2) }}
                             </span>
+                        @else
+                            <span itemprop="price"
+                                  content="{{ number_format($product->price, 2, '.', '') }}">
+                                    €{{ number_format($product->price, 2) }}
+                            </span>
+                        @endif
 
-                            <span class="text-base text-gray-500 ml-2">+ PDV</span>
-                        </p>
+                        <span class="text-base text-gray-500 ml-2">+ PDV</span>
+
                     </div>
 
                     <div class="mt-6">
@@ -212,7 +236,7 @@
                     <h2 class="text-2xl font-bold tracking-tight text-gray-900">Povezani proizvodi</h2>
                     <div class="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:gap-x-8" role="list" aria-label="Povezani proizvodi">
                         @foreach($product->related as $rel)
-                            <a href="{{ route('products.show', $rel->id) }}" class="group block" aria-label="Pogledaj: {{ $rel->title }}" role="listitem">
+                            <a href="{{ route('products.show', $rel->slug) }}" class="group block" aria-label="Pogledaj: {{ $rel->title }}" role="listitem">
                                 <div class="aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
                                     @php $relImg = $rel->images->first(); @endphp
                                     @if($relImg)

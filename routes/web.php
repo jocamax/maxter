@@ -24,7 +24,9 @@ Route::get('/dashboard', function () {
     return redirect('/');
 })->name('dashboard');
 
-Route::resource('products', ProductController::class);
+Route::resource('products', ProductController::class)->except('show');
+Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
+
 Route::patch('products/{product}/images/reorder', [ProductController::class, 'reorderImages'])
     ->name('products.images.reorder');
 Route::get('/masine-za-farbanje', [ProductController::class, 'getMasineZaFarb'])->name('products.getMasineZaFarb');

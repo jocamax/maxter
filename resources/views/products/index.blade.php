@@ -66,7 +66,7 @@
                     {{-- ItemList pozicija (1-based) --}}
                     <meta itemprop="position" content="{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}" />
 
-                    <a href="{{ route('products.show', $p->id) }}" class="block" aria-label="Pogledaj proizvod: {{ $p->title }}" itemprop="url">
+                    <a href="{{ route('products.show', $p->slug) }}" class="block" aria-label="Pogledaj proizvod: {{ $p->title }}" itemprop="url">
                         <div class="aspect-square w-full overflow-hidden rounded-md bg-white shadow-md">
                             @php $img = $p->images->first(); @endphp
 
@@ -90,29 +90,34 @@
                     <div class="mt-4 flex justify-between">
                         <div>
                             <h2 class="text-sm text-gray-700" itemprop="name">
-                                <a href="{{ route('products.show', $p->id) }}">
+                                <a href="{{ route('products.show', $p->slug) }}">
                                     <span aria-hidden="true" class="absolute inset-0"></span>
                                     {{ $p->title }}
                                 </a>
                             </h2>
 
                         </div>
+                        @if($p->discount > 0)
+                            @php
+                                $discountedPrice = $p->price * (1 - ($p->discount / 100));
+                            @endphp
 
-                        <p class="text-sm font-medium text-gray-900 px-1"
-                           itemprop="offers"
-                           itemscope
-                           itemtype="https://schema.org/Offer">
-                            <meta itemprop="priceCurrency" content="EUR" />
-
-                            <span itemprop="price" content="{{ number_format($p->price * 0.8, 2, '.', '') }}"
+                            <span itemprop="price"
+                                  content="{{ number_format($discountedPrice, 2, '.', '') }}"
                                   class="font-semibold text-red-600">
-                                    €{{ number_format($p->price * 0.8, 2) }}
-                            </span>
+                                    €{{ number_format($discountedPrice, 2) }}
+                             </span>
 
                             <span class="text-gray-500 text-xs line-through ml-2">
-        €{{ number_format($p->price, 2) }}
-    </span>
-                        </p>
+                                €{{ number_format($p->price, 2) }}
+                            </span>
+                        @else
+                            <span itemprop="price"
+                                  content="{{ number_format($p->price, 2, '.', '') }}">
+                                    €{{ number_format($p->price, 2) }}
+                            </span>
+                        @endif
+
                     </div>
                 </article>
             @empty

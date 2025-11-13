@@ -24,6 +24,7 @@ class ProductStoreRequest extends FormRequest
         return [
             'title'           => ['required','string','max:255'],
             'price'           => ['required','numeric','min:0'],
+            'discount'        => ['required','numeric','min:0'],
             'description'     => ['required','string'],
             'technical_data'  => ['required','string'],
             'images'          => ['required','array','min:1','max:5'],

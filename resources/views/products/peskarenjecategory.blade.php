@@ -35,7 +35,7 @@
         <div class="mt-6 grid grid-cols-1 max-w-7xl m-auto gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             @forelse ($products as $p)
                 <div class="group relative">
-                    <a href="{{ route('products.show', $p->id) }}" class="block">
+                    <a href="{{ route('products.show', $p->slug) }}" class="block">
                         <div class="aspect-square w-full overflow-hidden rounded-md bg-white shadow-md">
                             @php $img = $p->images->first(); @endphp
                             @if($img)
@@ -55,26 +55,32 @@
                     <div class="mt-4 flex justify-between">
                         <div>
                             <h3 class="text-sm text-gray-700">
-                                <a href="{{ route('products.show', $p->id) }}">
+                                <a href="{{ route('products.show', $p->slug) }}">
                                     <span aria-hidden="true" class="absolute inset-0"></span>
                                     {{ $p->title }}
                                 </a>
                             </h3>
                         </div>
-                        <p class="text-sm font-medium text-gray-900 px-1">
-                            <meta itemprop="priceCurrency" content="EUR" />
+                        @if($p->discount > 0)
+                            @php
+                                $discountedPrice = $p->price * (1 - ($p->discount / 100));
+                            @endphp
 
-                            <span itemprop="price" content="{{ number_format($p->price * 0.8, 2, '.', '') }}"
+                            <span itemprop="price"
+                                  content="{{ number_format($discountedPrice, 2, '.', '') }}"
                                   class="font-semibold text-red-600">
-                                    €{{ number_format($p->price * 0.8, 2) }}
-                            </span>
+                                    €{{ number_format($discountedPrice, 2) }}
+                             </span>
 
                             <span class="text-gray-500 text-xs line-through ml-2">
-                             €{{ number_format($p->price, 2) }}
+                                €{{ number_format($p->price, 2) }}
                             </span>
-
-                            <link itemprop="availability" href="https://schema.org/InStock" />
-                        </p>
+                        @else
+                            <span itemprop="price"
+                                  content="{{ number_format($p->price, 2, '.', '') }}">
+                                    €{{ number_format($p->price, 2) }}
+                            </span>
+                        @endif
                     </div>
                 </div>
             @empty
