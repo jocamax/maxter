@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +27,8 @@ Route::get('/dashboard', function () {
 
 Route::resource('products', ProductController::class)->except('show');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 Route::patch('products/{product}/images/reorder', [ProductController::class, 'reorderImages'])
     ->name('products.images.reorder');
