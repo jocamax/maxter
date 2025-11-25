@@ -63,20 +63,26 @@
                             {{-- Optional short meta under title --}}
                             {{-- <p class="mt-1 text-sm text-gray-500 line-clamp-1">{{ \Illuminate\Support\Str::limit($p->description, 40) }}</p> --}}
                         </div>
-                        <p class="text-sm font-medium text-gray-900 px-1">
-                            <meta itemprop="priceCurrency" content="EUR" />
+                        @if($p->discount > 0)
+                            @php
+                                $discountedPrice = $p->price * (1 - ($p->discount / 100));
+                            @endphp
 
-                            <span itemprop="price" content="{{ number_format($p->price * 0.8, 2, '.', '') }}"
+                            <span itemprop="price"
+                                  content="{{ number_format($discountedPrice, 2, '.', '') }}"
                                   class="font-semibold text-red-600">
-                                    €{{ number_format($p->price * 0.8, 2) }}
-                            </span>
+                                    €{{ number_format($discountedPrice, 2) }}
+                             </span>
 
                             <span class="text-gray-500 text-xs line-through ml-2">
-                             €{{ number_format($p->price, 2) }}
+                                €{{ number_format($p->price, 2) }}
                             </span>
-
-                            <link itemprop="availability" href="https://schema.org/InStock" />
-                        </p>
+                        @else
+                            <span itemprop="price"
+                                  content="{{ number_format($p->price, 2, '.', '') }}">
+                                    €{{ number_format($p->price, 2) }}
+                            </span>
+                        @endif
                     </div>
                 </div>
             @empty

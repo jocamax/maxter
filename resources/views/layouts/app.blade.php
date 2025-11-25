@@ -27,9 +27,8 @@
     @auth
         <meta name="robots" content="noindex, nofollow">
     @endauth
-    {{-- Favicons (postavi svoje putanje) --}}
+    {{-- Favicons  --}}
     <link rel="icon" type="image/png" href="{{ asset('storage/photos/logozasajt2.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 
     {{-- Preconnect/Fonts (ostavljeno tvoje bunny.net) --}}
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
