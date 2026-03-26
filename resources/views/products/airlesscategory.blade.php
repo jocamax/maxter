@@ -72,6 +72,7 @@
                                   content="{{ number_format($discountedPrice, 2, '.', '') }}"
                                   class="font-semibold text-red-600">
                                     €{{ number_format($discountedPrice, 2) }}
+                                +pdv
                              </span>
 
                             <span class="text-gray-500 text-xs line-through ml-2">
@@ -81,6 +82,7 @@
                             <span itemprop="price"
                                   content="{{ number_format($p->price, 2, '.', '') }}">
                                     €{{ number_format($p->price, 2) }}
+                                +pdv
                             </span>
                         @endif
                     </div>
