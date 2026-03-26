@@ -47,7 +47,11 @@ class QuestionController extends Controller
 
         $question = Question::create($validated);
 
-        Mail::to(config('mail.notification_to'))->send(new NewQuestionReceived($question));
+        try {
+            Mail::to(config('mail.notification_to'))->send(new NewQuestionReceived($question));
+        } catch (\Exception $e) {
+            \Log::error('Contact form mail failed: ' . $e->getMessage());
+        }
 
         return back()->with('success', 'Hvala! Vaša poruka je uspešno poslata.');
     }
