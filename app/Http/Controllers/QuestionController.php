@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewQuestionReceived;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class QuestionController extends Controller
 {
@@ -43,7 +45,9 @@ class QuestionController extends Controller
             'message' => ['required', 'string', 'max:5000'],
         ]);
 
-        Question::create($validated);
+        $question = Question::create($validated);
+
+        Mail::to(config('mail.notification_to'))->send(new NewQuestionReceived($question));
 
         return back()->with('success', 'Hvala! Vaša poruka je uspešno poslata.');
     }
